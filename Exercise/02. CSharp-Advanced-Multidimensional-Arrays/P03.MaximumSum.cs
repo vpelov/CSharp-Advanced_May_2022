@@ -63,8 +63,6 @@ namespace P03.MaximumSum
         }
 
 
-
-
         static int GetSquareSum(int[,] matrix, int row, int column)
         {
             int sum = 0;
@@ -76,8 +74,6 @@ namespace P03.MaximumSum
                     sum += num;
                 }
             }
-
-
 
             return sum;
         }
@@ -108,7 +104,6 @@ namespace P03.MaximumSum
             }
 
             return result;
-
         }
     }
 }
