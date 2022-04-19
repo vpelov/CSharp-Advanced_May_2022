@@ -29,7 +29,7 @@ namespace P03.MaximumSum
                 }
             }
 
-            int[,] result = new int[3, 3];
+            int[,] result = new int[3, 3];                              // Work with data
             int maxSum = 0;
 
             for (int rows = 0; rows <= matrix.GetLength(0) - result.GetLength(0); rows++)
@@ -48,7 +48,7 @@ namespace P03.MaximumSum
                 }
             }
 
-            Console.WriteLine($"Sum = {maxSum}");
+            Console.WriteLine($"Sum = {maxSum}");                       // Print data
 
             for (int i = 0; i < result.GetLength(0); i++)
             {
