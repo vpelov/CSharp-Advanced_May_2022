@@ -8,9 +8,9 @@ namespace P07.TheV_Logger
     {
         static void Main(string[] args)
         {
-            Dictionary<string, string[][]> dataLogger = new Dictionary<string, string[][]>();
+            Dictionary<string, List<List<string>>> dataLogger = new Dictionary<string, List<List<string>>>();
 
-            
+
             while (true)
             {
                 string command = Console.ReadLine();
@@ -26,46 +26,76 @@ namespace P07.TheV_Logger
                     string vloggerName = cmd[0];
                     if (!dataLogger.ContainsKey(vloggerName))
                     {
-                        string[][] data = new string[2][];
+                        List<List<string>> data = new List<List<string>>();
+                        List<string> primeList = new List<string>();
+                        List<string> followedList = new List<string>();
+                        data.Add(primeList);
+                        data.Add(followedList);
                         dataLogger.Add(vloggerName, data);
                     }
                 }
                 else if (cmd[1] == "followed")
                 {
-                    string folloed = cmd[0];
-                    string member = cmd[2];
-                    if (dataLogger.ContainsKey(folloed) && dataLogger.ContainsKey(member) && folloed != member)
+                    string folloer = cmd[0];
+                    string prime = cmd[2];
+                    if (dataLogger.ContainsKey(folloer) && dataLogger.ContainsKey(prime) && folloer != prime)
                     {
-                        if (!dataLogger[folloed][0].Contains(member))
+                        if (!dataLogger[prime][0].Contains(folloer))
                         {
-                            dataLogger[folloed][0].Append(member);
-                            dataLogger[folloed][1].Append(folloed);
+                            dataLogger[prime][0].Add(folloer);
+                            dataLogger[folloer][1].Add(prime);
                         }
                     }
-
                 }
-
             }
 
             Console.WriteLine($"The V-Logger has a total of {dataLogger.Count} vloggers in its logs.");
 
-            int maxFollowers = int.MinValue;
-            string name = string.Empty;
+            string famousVlogger = string.Empty;
+            int followers = int.MinValue;
 
             foreach (var item in dataLogger)
             {
-                int current = item.Value.Count;
-                if (current > maxFollowers)
+                if (item.Value[0].Count > followers)
                 {
-                    name = item.Key;
+                    followers = item.Value[0].Count;
+                    famousVlogger = item.Key;
+                    continue;
+                }
+
+                if (item.Value[0].Count == followers)
+                {
+                    if (item.Value[1].Count < dataLogger[famousVlogger][1].Count)
+                    {
+                        famousVlogger = item.Key;
+                    }
                 }
             }
 
+            int countNumber = 1;
 
-                        // TODO................!!!!!
+            foreach (var item in dataLogger)
+            {
 
+                if (item.Key == famousVlogger)
+                {
+                    Console.WriteLine($"{countNumber}. {famousVlogger} : {item.Value[0].Count} followers, {item.Value[1].Count} following");
+                    countNumber++;
+                    foreach (string data in item.Value[0].OrderBy(x => x))
+                    {                        
+                        Console.WriteLine($"*  {data}");
+                    }
+                }
+            }
 
-
+            foreach (var item in dataLogger.OrderByDescending(x => x.Value[0].Count).ThenBy(x => x.Value[1].Count))
+            {
+                if (item.Key != famousVlogger)
+                {
+                    Console.WriteLine($"{countNumber}. {item.Key} : {item.Value[0].Count} followers, {item.Value[1].Count} following");
+                    countNumber++;
+                }
+            }
         }
     }
 }
