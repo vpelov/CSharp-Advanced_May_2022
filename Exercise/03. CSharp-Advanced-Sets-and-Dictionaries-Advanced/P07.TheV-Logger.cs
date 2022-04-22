@@ -8,8 +8,9 @@ namespace P07.TheV_Logger
     {
         static void Main(string[] args)
         {
-            Dictionary<string, List<string>> dataLogger = new Dictionary<string, List<string>>();
+            Dictionary<string, string[][]> dataLogger = new Dictionary<string, string[][]>();
 
+            
             while (true)
             {
                 string command = Console.ReadLine();
@@ -25,18 +26,20 @@ namespace P07.TheV_Logger
                     string vloggerName = cmd[0];
                     if (!dataLogger.ContainsKey(vloggerName))
                     {
-                        dataLogger.Add(vloggerName, new List<string>());
+                        string[][] data = new string[2][];
+                        dataLogger.Add(vloggerName, data);
                     }
                 }
                 else if (cmd[1] == "followed")
                 {
                     string folloed = cmd[0];
-                    string vloggerName = cmd[2];
-                    if (dataLogger.ContainsKey(folloed) && dataLogger.ContainsKey(vloggerName) && folloed != vloggerName)
+                    string member = cmd[2];
+                    if (dataLogger.ContainsKey(folloed) && dataLogger.ContainsKey(member) && folloed != member)
                     {
-                        if (!dataLogger[vloggerName].Contains(folloed))
+                        if (!dataLogger[folloed][0].Contains(member))
                         {
-                            dataLogger[vloggerName].Add(folloed);
+                            dataLogger[folloed][0].Append(member);
+                            dataLogger[folloed][1].Append(folloed);
                         }
                     }
 
