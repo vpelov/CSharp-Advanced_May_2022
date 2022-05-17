@@ -15,10 +15,12 @@ namespace P01.Reverse_a_String
                 stack.Push(item);
             }
 
-            foreach (char ch in stack)
-            {
-                Console.Write(ch);
-            }
+            Console.WriteLine(String.Join("", stack));    // First var.
+
+            //foreach (char ch in stack)   // Second var.
+            //{
+            //    Console.Write(ch);
+            //}
         }
     }
 }
