@@ -1,39 +1,36 @@
-﻿namespace LineNumbers
-{
-    using System;
-    using System.IO;
-    using System.Linq;
-    using System.Text;
+﻿using System.IO;
 
+namespace LineNumbers
+{
     public class LineNumbers
     {
         static void Main()
         {
-            string inputFilePath = @"..\..\..\text.txt";
-            string outputFilePath = @"..\..\..\output.txt";
+            string inputPath = @"..\..\..\input.txt";
+            string outputPath = @"..\..\..\output.txt";
 
-            ProcessLines(inputFilePath, outputFilePath);
+            RewriteFileWithLineNumbers(inputPath, outputPath);
         }
 
-        public static void ProcessLines(string inputFilePath, string outputFilePath)
+        public static void RewriteFileWithLineNumbers(string inputFilePath, string outputFilePath)
         {
-            StreamReader reader = new StreamReader(inputFilePath);
-            int count = 1;
-            string line = reader.ReadLine();
-            string printLine = string.Empty;
-            while(line != null)
+            using (StreamReader reader = new StreamReader(inputFilePath))
             {
-                int countLetters = line.Count(char.IsLetter);
-                int countPunctuation = line.Count(char.IsPunctuation);
-                string newLine = $"Line {count}: {line} ({countLetters}) ({countPunctuation}) \n";
+                using (StreamWriter writer = new StreamWriter(outputFilePath))
+                {
+                    int count = 1;
+                    string line = reader.ReadLine();
+                    while (line != null)
+                    {
+                        string newLine = $"{count}. {line}";
+                        writer.WriteLine(newLine);
+                        count++;
+                        line = reader.ReadLine();
+                    }
 
-                printLine += newLine;
-
-                count++;
-                line = reader.ReadLine();
+                }
             }
-
-            File.WriteAllText(outputFilePath, printLine);
         }
     }
 }
+
