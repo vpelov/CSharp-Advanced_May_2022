@@ -20,7 +20,6 @@
             }
             catch (ArgumentException ae)
             {
-
                 Console.WriteLine(ae.Message);
             }
             
