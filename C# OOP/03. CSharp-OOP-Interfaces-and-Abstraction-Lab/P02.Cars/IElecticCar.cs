@@ -1,0 +1,13 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Cars
+{
+    public interface IElecticCar 
+    {
+        int Battery { get; set; }
+
+
+    }
+}
